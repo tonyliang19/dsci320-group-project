@@ -25,8 +25,7 @@ def helper_assign_region(data, row):
               "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia",
               "Uganda", "Zambia", "Zimbabwe"
              ]
-    EUROPE = list(set(all_countries) - set(OCEANIA) - set(AMERICA) - set(ASIA) - set(AFRICA))
-    EUROPE.sort()
+    EUROPE = sorted(list(set(all_countries) - set(OCEANIA) - set(AMERICA) - set(ASIA) - set(AFRICA)))
     # check size equiavalent to guarantee partition correct
     assert(len(OCEANIA) + len(AMERICA) + len(ASIA) + len(AFRICA) + len(EUROPE) == len(all_countries))
     
