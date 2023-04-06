@@ -1,3 +1,5 @@
+import altair as alt
+
 # helper to apply to data to assign region
 def helper_assign_region(data, row):
     # divide countries by continent/region
@@ -53,3 +55,37 @@ def preprocessing(data):
     # assign to new variable
     fifa_subset = data[columns_interests]
     return fifa_subset
+
+
+# helper to generate task five viz
+def task_five_viz(data):
+    # slider
+    brush = alt.selection_interval(
+        encodings=["x"],
+        resolve="intersect"
+    )
+
+    # histogram for height and overall
+    base_hist = alt.Chart(data).mark_bar().encode(
+        x = alt.X(alt.repeat("row"), type="quantitative",
+                  bin=alt.Bin(maxbins=100, minstep=1)
+                 ),
+        y = alt.Y('count():Q', title=None)
+
+    )
+    # adding these by layers and render it
+    ovr_height_hist = alt.layer(
+        base_hist.add_selection(brush).encode(
+            color=alt.value('lightgrey')
+        ),
+        base_hist.transform_filter(brush)
+    ).properties(
+        width=900,
+        height=100
+    ).repeat(
+        row=['overall', 'height'],
+        data=subset
+    ).configure_view(
+        stroke='transparent' # no outline
+    )
+    return ovr_height_hist
