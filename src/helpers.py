@@ -1,4 +1,13 @@
 import altair as alt
+import pandas as pd
+
+def get_data(data_path, preprocess=False):
+    data = pd.read_csv(data_path)
+    if preprocess is True:
+        fifa_subset = preprocessing(data)
+        # store to data
+        data = fifa_subset
+    return data
 
 # helper to apply to data to assign region
 def helper_assign_region(data, row):
