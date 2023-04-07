@@ -1,7 +1,22 @@
 import altair as alt
 import pandas as pd
+import os
+import sys
+from urllib.request import urlretrieve
 
+# helper to get the data and process them, if not exist yet then download
+# and process it if set to True
 def get_data(data_path, preprocess=False):
+    # checkes if file exists, if not downloaded to that path
+    url = "https://raw.githubusercontent.com/tonyliang19/dsci320-group-project/milestone2/data/player_raw_data.csv"
+    if not os.path.isfile(data_path):
+        print(f"You don't have the file yet, and it will be downloaded to: {os.path.abspath(data_path)}")
+        print("Downloading now, wait a few secs")
+        urlretrieve(url, data_path)
+        print("Done!")
+    else:
+        pass
+        
     data = pd.read_csv(data_path)
     if preprocess is True:
         fifa_subset = preprocessing(data)
